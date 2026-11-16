@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>UFC Info</title>
+<style>
+:root{--bg:#141414;--card:#242424;--card2:#2e2e2e;--tx:#fff;--mu:#a8a8a8;--red:#d6001c;--line:#3a3a3a;color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--tx);font-family:"Barlow Condensed","Arial Narrow",Arial,sans-serif;font-size:17px}
+#app{max-width:520px;margin:0 auto;padding:14px 14px 40px}
+h1,h2,h3{margin:0;font-weight:800;letter-spacing:.5px}
+h1{font-size:44px;line-height:.95;font-style:italic}
+h2{font-size:28px}
+.mu{color:var(--mu)}.red{color:var(--red)}
+.top{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.back{background:var(--card);color:var(--tx);border:1px solid var(--line);border-radius:8px;padding:8px 12px;font:inherit;font-weight:700;cursor:pointer}
+.home{display:grid;gap:10px;margin-top:18px}
+.tile{display:flex;justify-content:space-between;align-items:center;background:var(--card);border-left:6px solid var(--red);border-radius:6px;padding:20px 16px;font-size:26px;font-weight:800;color:var(--tx);text-decoration:none}
+.tile small{display:block;font-size:15px;font-weight:500;color:var(--mu)}
+.note{background:#2a1a1c;border:1px solid #5a2229;border-radius:8px;padding:8px 12px;font-size:15px;color:#e8b9be;margin:12px 0}
+.car{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:12px;margin:0 -14px;padding:0 14px 8px}
+.slide{flex:0 0 92%;scroll-snap-align:center}
+.dots{text-align:center;color:var(--mu);font-size:15px;margin:2px 0 10px}
+.ev h3{font-size:30px}
+.part{margin-top:16px}
+.part h4{margin:0 0 8px;font-size:20px;display:flex;justify-content:space-between;border-bottom:2px solid var(--red);padding-bottom:4px}
+.fight{background:var(--card);border-radius:8px;padding:12px;margin-bottom:8px}
+.fight.main{border:2px solid var(--red);background:var(--card2)}
+.vs{display:grid;grid-template-columns:1fr auto 1fr;align-items:start;gap:6px;text-align:center}
+.vs b{font-size:19px;display:block;line-height:1.1;margin-top:6px}
+.vs i{font-style:normal;font-size:14px;color:var(--mu)}
+.vs .x{align-self:center;color:var(--red);font-weight:800;font-size:20px}
+.div{text-align:center;color:var(--mu);font-size:15px;margin-top:8px}
+.av{border-radius:50%;display:grid;place-items:center;font-weight:800;color:#fff;margin:0 auto;border:2px solid var(--line)}
+.champ{background:var(--card2);border:2px solid var(--red);border-radius:10px;padding:14px;text-align:center;margin-bottom:8px}
+.champ b{display:block;font-size:26px;margin-top:8px}
+.badge{display:inline-block;background:var(--red);border-radius:4px;padding:1px 8px;font-size:14px;font-weight:800}
+.grid5{display:grid;grid-template-columns:repeat(auto-fill,minmax(92px,1fr));gap:8px}
+.mini{background:var(--card);border-radius:8px;padding:8px 4px;text-align:center;font-size:15px;line-height:1.1}
+.mini b{display:block;margin-top:6px}
+.mini span{color:var(--red);font-weight:800}
+.sel{display:flex;gap:8px;overflow-x:auto;margin-bottom:14px;padding-bottom:4px}
+.chip{flex:0 0 auto;background:var(--card);color:var(--tx);border:1px solid var(--line);border-radius:20px;padding:6px 14px;font:inherit;font-weight:700;cursor:pointer}
+.chip.on{background:var(--red);border-color:var(--red)}
+input{width:100%;background:var(--card);border:1px solid var(--line);border-radius:8px;color:var(--tx);padding:12px;font:inherit;font-size:18px;margin:6px 0 12px}
+input:focus,button:focus-visible,a:focus-visible{outline:2px solid var(--red);outline-offset:2px}
+.row{display:flex;align-items:center;gap:12px;background:var(--card);border-radius:8px;padding:10px;margin-bottom:8px;cursor:pointer;width:100%;border:0;color:var(--tx);font:inherit;text-align:left}
+.row small{display:block;color:var(--mu);font-size:15px}
+.prof{text-align:center}
+.facts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:14px 0}
+.facts div{background:var(--card);border-radius:8px;padding:10px}
+.facts small{display:block;color:var(--mu);font-size:14px}
+.facts b{font-size:21px}
+.rec{background:var(--red);border-radius:10px;padding:10px;font-size:30px;font-weight:800;margin-bottom:14px}
+.hf{display:flex;justify-content:space-between;align-items:center;background:var(--card);border-radius:8px;padding:10px 12px;margin-bottom:8px;text-align:left}
+.w{color:#fff;background:var(--red);border-radius:4px;padding:2px 8px;font-weight:800}
+.l{color:var(--mu);background:var(--line);border-radius:4px;padding:2px 8px;font-weight:800}
+.res{color:var(--red);font-weight:700;font-size:16px}
+.news{background:var(--card);border-radius:8px;padding:12px;margin-bottom:8px;cursor:pointer;width:100%;border:0;color:var(--tx);font:inherit;text-align:left;display:block}
+.news h3{font-size:22px;line-height:1.1;margin:2px 0 4px}
+.news p{margin:6px 0 0;font-size:17px;line-height:1.3}
+.full{display:none;border-top:1px solid var(--line);margin-top:8px;padding-top:8px;color:#d8d8d8}
+.news.open .full{display:block}
+@media (prefers-reduced-motion:no-preference){.car{scroll-behavior:smooth}}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+(()=>{
+const $=s=>document.querySelector(s), app=$('#app');
+const hue=n=>[...n].reduce((a,c)=>a+c.charCodeAt(0),0)%360;
+const ini=n=>n.split(' ').map(w=>w[0]).slice(0,2).join('');
+const av=(n,s=64)=>`<div class="av" style="width:${s}px;height:${s}px;font-size:${s/2.8}px;background:linear-gradient(135deg,hsl(${hue(n)} 20% 32%),hsl(${hue(n)} 20% 16%))" role="img" aria-label="Foto de ${n}">${ini(n)}</div>`;
+const sample='<div class="note">Datos de ejemplo para el prototipo: pueden no coincidir con la realidad actual. Las fotos son marcadores con iniciales.</div>';
+
+const EVENTS=[
+{n:'UFC 330',d:'Sáb 5 dic 2026',p:'Las Vegas, EE. UU.',parts:[
+ ['Cartelera estelar','22:00',[['Ilia Topuria','Islam Makhachev','Peso ligero','17-0','27-1'],['Alex Pereira','Magomed Ankalaev','Peso semipesado','13-3','21-2'],['Merab Dvalishvili','Petr Yan','Peso gallo','20-4','19-5']]],
+ ['Preliminares','20:00',[['Max Holloway','Justin Gaethje','Peso ligero','26-8','26-5'],['Weili Zhang','Tatiana Suarez','Peso paja fem.','25-3','12-0']]],
+ ['Primeras preliminares','18:00',[['Paddy Pimblett','Dan Hooker','Peso ligero','23-3','24-13'],['Jack Della Maddalena','Ian Garry','Peso welter','18-2','16-0']]]]},
+{n:'UFC Fight Night: Praga',d:'Sáb 19 dic 2026',p:'Praga, Chequia',parts:[
+ ['Cartelera estelar','19:00',[['Jiri Prochazka','Carlos Ulberg','Peso semipesado','31-5','13-1'],['Tom Aspinall','Ciryl Gane','Peso pesado','15-3','13-2']]],
+ ['Preliminares','16:00',[['Sean Strickland','Israel Adesanya','Peso medio','29-7','24-5'],['Valentina Shevchenko','Manon Fiorot','Peso mosca fem.','25-4','12-2']]]]}
+];
+
+const DIV=[
+['Peso pesado',['Tom Aspinall','Ciryl Gane','Sergei Pavlovich','Alexander Volkov','Curtis Blaydes','Jailton Almeida']],
+['Peso semipesado',['Alex Pereira','Magomed Ankalaev','Jiri Prochazka','Carlos Ulberg','Jamahal Hill','Jan Blachowicz']],
+['Peso medio',['Khamzat Chimaev','Dricus du Plessis','Sean Strickland','Nassourdine Imavov','Israel Adesanya','Caio Borralho']],
+['Peso welter',['Islam Makhachev','Jack Della Maddalena','Belal Muhammad','Shavkat Rakhmonov','Ian Garry','Leon Edwards']],
+['Peso ligero',['Ilia Topuria','Arman Tsarukyan','Charles Oliveira','Max Holloway','Paddy Pimblett','Justin Gaethje']],
+['Peso pluma',['Alexander Volkanovski','Diego Lopes','Movsar Evloev','Yair Rodriguez','Brian Ortega','Aaron Pico']],
+['Peso gallo',['Merab Dvalishvili','Petr Yan','Sean OMalley','Umar Nurmagomedov','Cory Sandhagen','Song Yadong']],
+['Peso mosca',['Alexandre Pantoja','Joshua Van','Brandon Royval','Manel Kape','Kai Kara-France','Brandon Moreno']],
+['Peso paja (F)',['Weili Zhang','Tatiana Suarez','Virna Jandiroba','Amanda Lemos','Yan Xiaonan','Mackenzie Dern']],
+['Peso mosca (F)',['Valentina Shevchenko','Manon Fiorot','Natalia Silva','Erin Blanchfield','Alexa Grasso','Rose Namajunas']],
+['Peso gallo (F)',['Kayla Harrison','Julianna Pena','Raquel Pennington','Norma Dumont','Ketlen Vieira','Irene Aldana']],
+['Libra por libra',['Islam Makhachev','Ilia Topuria','Merab Dvalishvili','Alex Pereira','Tom Aspinall','Alexandre Pantoja']]];
+
+const F=[
+{n:'Islam Makhachev',a:35,nat:'Rusia',kg:'70 kg',cm:'180 cm',r:'27-1-0',f:[['Jack Della Maddalena','V','Sumisión','2025'],['Renato Moicano','V','Decisión','2025'],['Dustin Poirier','V','Sumisión','2024'],['Alexander Volkanovski','V','Decisión','2023']]},
+{n:'Ilia Topuria',a:29,nat:'España / Georgia',kg:'66 kg',cm:'170 cm',r:'17-0-0',f:[['Charles Oliveira','V','KO','2025'],['Max Holloway','V','KO','2024'],['Alexander Volkanovski','V','KO','2024'],['Josh Emmett','V','Decisión','2023']]},
+{n:'Conor McGregor',a:38,nat:'Irlanda',kg:'70 kg',cm:'175 cm',r:'22-6-0',f:[['Dustin Poirier','D','TKO','2021'],['Dustin Poirier','D','KO','2021'],['Donald Cerrone','V','KO','2020'],['Khabib Nurmagomedov','D','Sumisión','2018']]},
+{n:'Max Holloway',a:34,nat:'EE. UU.',kg:'66 kg',cm:'180 cm',r:'26-8-0',f:[['Ilia Topuria','D','KO','2024'],['Justin Gaethje','V','KO','2024'],['Chan Sung Jung','V','TKO','2023'],['Alexander Volkanovski','D','Decisión','2022']]},
+{n:'Alex Pereira',a:39,nat:'Brasil',kg:'93 kg',cm:'193 cm',r:'13-3-0',f:[['Magomed Ankalaev','D','Decisión','2025'],['Khalil Rountree Jr.','V','KO','2024'],['Jamahal Hill','V','TKO','2024'],['Jiri Prochazka','V','KO','2024']]},
+{n:'Jon Jones',a:39,nat:'EE. UU.',kg:'120 kg',cm:'193 cm',r:'28-1-0',f:[['Stipe Miocic','V','TKO','2024'],['Ciryl Gane','V','Sumisión','2023'],['Dominick Reyes','V','Decisión','2020'],['Thiago Santos','V','Decisión','2019']]},
+{n:'Charles Oliveira',a:36,nat:'Brasil',kg:'70 kg',cm:'178 cm',r:'35-11-0',f:[['Ilia Topuria','D','KO','2025'],['Arman Tsarukyan','D','Decisión','2024'],['Beneil Dariush','V','Decisión','2023'],['Michael Chandler','V','TKO','2021']]},
+{n:'Justin Gaethje',a:37,nat:'EE. UU.',kg:'70 kg',cm:'180 cm',r:'26-5-0',f:[['Max Holloway','D','KO','2024'],['Dustin Poirier','V','KO','2023'],['Rafael Fiziev','V','Decisión','2022'],['Charles Oliveira','D','Sumisión','2022']]}];
+
+const HIST=[
+{n:'UFC 300',d:'13 abr 2024',p:'Las Vegas',parts:[
+ ['Cartelera estelar',[['Alex Pereira','Jamahal Hill','Peso semipesado','Pereira ganó por TKO, R1'],['Max Holloway','Justin Gaethje','Peso ligero','Holloway ganó por KO, R5'],['Zhang Weili','Yan Xiaonan','Peso paja fem.','Zhang ganó por decisión'],['Arman Tsarukyan','Charles Oliveira','Peso ligero','Tsarukyan ganó por decisión']]],
+ ['Preliminares',[['Bo Nickal','Cody Brundage','Peso medio','Nickal ganó por sumisión, R1']]]]},
+{n:'UFC 308',d:'26 oct 2024',p:'Abu Dabi',parts:[['Cartelera estelar',[['Ilia Topuria','Max Holloway','Peso pluma','Topuria ganó por KO, R3'],['Khamzat Chimaev','Robert Whittaker','Peso medio','Chimaev ganó por sumisión, R1']]]]},
+{n:'UFC 229',d:'6 oct 2018',p:'Las Vegas',parts:[['Cartelera estelar',[['Khabib Nurmagomedov','Conor McGregor','Peso ligero','Khabib ganó por sumisión, R4'],['Tony Ferguson','Anthony Pettis','Peso ligero','Ferguson ganó por TKO, R3']]]]},
+{n:'UFC 205',d:'12 nov 2016',p:'Nueva York',parts:[['Cartelera estelar',[['Conor McGregor','Eddie Alvarez','Peso ligero','McGregor ganó por TKO, R2'],['Tyron Woodley','Stephen Thompson','Peso welter','Empate dividido']]]]}];
+
+const NEWS=[
+['Se confirma la cartelera de UFC 330','14 nov 2026','La pelea estelar enfrentará a dos de los mejores libra por libra.','La organización confirmó la cartelera completa, con tres combates estelares y varios debuts. Los peleadores ya están en la fase final de preparación.'],
+['Nuevo líder en el ranking de peso pesado','11 nov 2026','Un cambio en el top 5 reordena la división.','Tras los últimos resultados, el ranking oficial se actualizó y la lucha por el cinturón queda más abierta que nunca.'],
+['Regreso anunciado para diciembre','8 nov 2026','Un excampeón vuelve tras un año de ausencia.','El peleador confirmó que volverá al octágono en la cartelera de Praga, con un rival aún por anunciar.'],
+['Récord de asistencia en Abu Dabi','2 nov 2026','El evento reunió a más de 18 000 personas.','La cifra supera a las anteriores visitas de la promotora a la región y confirma el crecimiento de la franquicia.']];
+
+const SEC=[['eventos','Próximos eventos','Carrusel de carteleras'],['rankings','Rankings','Campeones y top 5'],['historial','Historial de eventos','Busca por peleador o número'],['stats','Estadísticas','Perfiles y trayectoria'],['noticias','Noticias','Lo último de UFC']];
+const top=t=>`<div class="top"><button class="back" onclick="location.hash=''">‹ Inicio</button><h2>${t}</h2></div>`;
+const fighter=(n,s)=>`<div>${av(n,s)}<b>${n}</b></div>`;
+
+function home(){app.innerHTML=`<h1>UFC<br><span class="red">INFO</span></h1><div class="mu">Eventos, rankings, peleadores y noticias</div>${sample}<nav class="home">${SEC.map(s=>`<a class="tile" href="#${s[0]}"><span>${s[1]}<small>${s[2]}</small></span><span class="red">›</span></a>`).join('')}</nav>`}
+
+function eventos(){
+ app.innerHTML=top('Próximos eventos')+`<div class="mu">Desliza a la izquierda para ver el siguiente evento.</div><div class="dots" id="dots">1 / ${EVENTS.length}</div><div class="car" id="car">${EVENTS.map(e=>`<section class="slide ev"><h3>${e.n}</h3><div class="mu">${e.d} · ${e.p}</div>${e.parts.map((p,pi)=>`<div class="part"><h4><span>${p[0]}</span><span class="red">${p[1]}</span></h4>${p[2].map((f,i)=>`<div class="fight ${pi==0&&i==0?'main':''}">${pi==0&&i==0?'<span class="badge">PELEA ESTELAR</span>':''}<div class="vs">${fighter(f[0],pi==0&&i==0?84:60)}<span class="x">VS</span>${fighter(f[1],pi==0&&i==0?84:60)}</div><div class="vs"><i>${f[3]}</i><span></span><i>${f[4]}</i></div><div class="div">${f[2]}</div></div>`).join('')}</div>`).join('')}</section>`).join('')}</div>`+sample;
+ const c=$('#car');c.onscroll=()=>{$('#dots').textContent=(Math.round(c.scrollLeft/c.firstElementChild.offsetWidth)+1)+' / '+EVENTS.length}
+}
+
+function rankings(){
+ const i=+(sessionStorageSafe('div')||0);draw(i);
+ function draw(i){const d=DIV[i];app.innerHTML=top('Rankings')+`<div class="sel">${DIV.map((x,j)=>`<button class="chip ${j==i?'on':''}" data-i="${j}">${x[0]}</button>`).join('')}</div><div class="champ"><span class="badge">${d[0]=='Libra por libra'?'N.º 1':'CAMPEÓN/A'}</span>${av(d[1][0],110)}<b>${d[1][0]}</b></div><div class="grid5">${d[1].slice(1).map((n,k)=>`<div class="mini"><span>${k+1}</span>${av(n,56)}<b>${n}</b></div>`).join('')}</div>`+sample;
+ document.querySelectorAll('.chip').forEach(b=>b.onclick=()=>{sessionStorageSafe('div',b.dataset.i);draw(+b.dataset.i)})}
+}
+let mem={};function sessionStorageSafe(k,v){if(v===undefined)return mem[k];mem[k]=v}
+
+function historial(){
+ app.innerHTML=top('Historial de eventos')+`<label class="mu" for="q">Busca por peleador o número (ej. UFC 300)</label><input id="q" placeholder="UFC 300, McGregor, Topuria…" autocomplete="off"><div id="out"></div>`;
+ const out=$('#out'),q=$('#q');
+ function list(){const t=q.value.trim().toLowerCase();const r=HIST.filter(e=>!t||e.n.toLowerCase().includes(t)||('ufc '+t).includes(e.n.toLowerCase())&&/^\d+$/.test(t)&&e.n.toLowerCase()=='ufc '+t||e.parts.some(p=>p[1].some(f=>f[0].toLowerCase().includes(t)||f[1].toLowerCase().includes(t))));
+  out.innerHTML=r.length?r.map(e=>`<button class="row" data-n="${e.n}"><div><b style="font-size:22px">${e.n}</b><small>${e.d} · ${e.p}</small></div></button>`).join(''):'<p class="mu">No hay eventos con esa búsqueda. Prueba con otro nombre o número.</p>';
+  out.querySelectorAll('.row').forEach(b=>b.onclick=()=>detail(b.dataset.n))}
+ function detail(n){const e=HIST.find(x=>x.n==n);out.innerHTML=`<button class="back" id="bk">‹ Resultados</button><h3 style="margin-top:12px;font-size:30px">${e.n}</h3><div class="mu">${e.d} · ${e.p}</div>${e.parts.map((p,pi)=>`<div class="part"><h4><span>${p[0]}</span></h4>${p[1].map((f,i)=>`<div class="fight ${pi==0&&i==0?'main':''}"><div class="vs">${fighter(f[0],56)}<span class="x">VS</span>${fighter(f[1],56)}</div><div class="div">${f[2]}</div><div class="div res">${f[3]}</div></div>`).join('')}</div>`).join('')}`;$('#bk').onclick=list}
+ q.oninput=list;list();
+}
+
+function stats(){
+ app.innerHTML=top('Estadísticas')+`<label class="mu" for="q">Buscar peleador</label><input id="q" placeholder="Nombre del peleador" autocomplete="off"><div id="out"></div>`+sample;
+ const out=$('#out'),q=$('#q');
+ function list(){const t=q.value.trim().toLowerCase();const r=F.filter(f=>f.n.toLowerCase().includes(t));
+  out.innerHTML=r.length?r.map(f=>`<button class="row" data-n="${f.n}">${av(f.n,48)}<div><b style="font-size:20px">${f.n}</b><small>${f.nat} · ${f.r}</small></div></button>`).join(''):'<p class="mu">No encontramos a ese peleador. Revisa la ortografía.</p>';
+  out.querySelectorAll('.row').forEach(b=>b.onclick=()=>prof(b.dataset.n))}
+ function prof(n){const f=F.find(x=>x.n==n);out.innerHTML=`<button class="back" id="bk">‹ Resultados</button><div class="prof"><div style="margin:14px 0 6px">${av(f.n,130)}</div><h3 style="font-size:32px">${f.n}</h3></div><div class="facts"><div><small>Edad</small><b>${f.a} años</b></div><div><small>Nacionalidad</small><b>${f.nat}</b></div><div><small>Peso</small><b>${f.kg}</b></div><div><small>Altura</small><b>${f.cm}</b></div></div><div class="rec">${f.r}<div style="font-size:15px;font-weight:500">Récord (V-D-E)</div></div><h4 style="font-size:22px;margin:0 0 8px">Peleas, de más reciente a más antigua</h4>${f.f.map(x=>`<div class="hf"><div><b>vs ${x[0]}</b><div class="mu" style="font-size:15px">${x[3]}</div></div><div style="text-align:right"><span class="${x[1]=='V'?'w':'l'}">${x[1]=='V'?'GANÓ':'PERDIÓ'}</span><div class="res" style="color:var(--mu)">${x[2]}</div></div></div>`).join('')}`;$('#bk').onclick=list;scrollTo(0,0)}
+ q.oninput=list;list();
+}
+
+function noticias(){
+ app.innerHTML=top('Noticias')+NEWS.map(n=>`<button class="news" aria-expanded="false"><span class="mu" style="font-size:15px">${n[1]}</span><h3>${n[0]}</h3><p>${n[2]}</p><div class="full">${n[3]}<div class="red" style="margin-top:6px;font-weight:700">Toca para cerrar</div></div></button>`).join('')+sample;
+ document.querySelectorAll('.news').forEach(b=>b.onclick=()=>{b.classList.toggle('open');b.setAttribute('aria-expanded',b.classList.contains('open'))});
+}
+
+const R={eventos,rankings,historial,stats,noticias};
+function route(){(R[location.hash.slice(1)]||home)();scrollTo(0,0)}
+addEventListener('hashchange',route);route();
+})();
+</script>
+</body>
+</html>
